@@ -4,6 +4,7 @@
     package="ua.com.dkazhika.superheroes">
 
     <application
+        android:name=".core.SuperheroesApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
