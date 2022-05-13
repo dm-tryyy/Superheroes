@@ -1,0 +1,29 @@
+Name: Getting list of heroes without internet and cache
+Preconditions: first installment, internet is turned off
+Steps:
+1. Open app
+No internet connection error and button "Try again" are shown
+2. Press button "Try again"
+No internet connection error and button "Try again" are shown
+3. Turn internet on and press button "Try again"
+List of heroes is shown after loading
+
+Name: Getting list of heroes with internet and without cache
+Preconditions: first installment, internet is turned on
+Steps:
+1.Open app
+List of heroes is shown after loading
+
+Name: Getting list of heroes without internet and with cache
+Preconditions: get list of heroes in previous sessions
+Steps:
+1.Open app
+List of heroes is shown without loading
+
+Name: Getting list of heroes with internet and with cache
+Preconditions: get list of heroes in previous sessions
+Steps:
+1.Open app
+List of heroes is shown without loading
+
+
