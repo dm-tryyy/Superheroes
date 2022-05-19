@@ -8,6 +8,8 @@ import ua.com.dkazhika.superheroes.data.cache.HeroesCacheDataSource
 import ua.com.dkazhika.superheroes.data.cache.HeroesCacheMapper
 import ua.com.dkazhika.superheroes.data.cache.RealmProvider
 import ua.com.dkazhika.superheroes.data.net.*
+import ua.com.dkazhika.superheroes.domain.BaseHeroesDataToDomainMapper
+import ua.com.dkazhika.superheroes.domain.HeroesInteractor
 
 class SuperheroesApp : Application() {
 
@@ -35,5 +37,6 @@ class SuperheroesApp : Application() {
             heroesCloudMapper,
             heroesCacheMapper
         )
+        val heroesInteractor = HeroesInteractor.Base(heroesRepository, BaseHeroesDataToDomainMapper())
     }
 }
