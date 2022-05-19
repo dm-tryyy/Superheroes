@@ -10,12 +10,19 @@ import ua.com.dkazhika.superheroes.data.cache.RealmProvider
 import ua.com.dkazhika.superheroes.data.net.*
 import ua.com.dkazhika.superheroes.domain.BaseHeroesDataToDomainMapper
 import ua.com.dkazhika.superheroes.domain.HeroesInteractor
+import ua.com.dkazhika.superheroes.presentation.BaseHeroesDomainToUiMapper
+import ua.com.dkazhika.superheroes.presentation.HeroesCommunication
+import ua.com.dkazhika.superheroes.presentation.MainViewModel
+import ua.com.dkazhika.superheroes.presentation.ResourceProvider
 
 class SuperheroesApp : Application() {
 
     private companion object {
         const val BASE_URL = "https://gateway.marvel.com/v1/public/"
     }
+
+
+    lateinit var mainViewModel: MainViewModel
 
     override fun onCreate() {
         super.onCreate()
@@ -38,5 +45,10 @@ class SuperheroesApp : Application() {
             heroesCacheMapper
         )
         val heroesInteractor = HeroesInteractor.Base(heroesRepository, BaseHeroesDataToDomainMapper())
+
+        mainViewModel = MainViewModel(
+            heroesInteractor,
+            BaseHeroesDomainToUiMapper(HeroesCommunication.Base(), ResourceProvider.Base(this))
+        )
     }
 }
