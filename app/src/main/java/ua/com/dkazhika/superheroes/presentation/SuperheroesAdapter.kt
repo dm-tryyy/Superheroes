@@ -34,8 +34,11 @@ class SuperheroesAdapter : RecyclerView.Adapter<SuperheroesAdapter.SuperheroesVi
     inner class SuperheroesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(hero: Hero) {
             itemView.findViewById<TextView>(R.id.name).text = hero.name
+            val imageUrl = hero.imageUrl
             Glide.with(itemView.context)
-                .load(hero.imageUrl)
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_background)
                 .centerCrop()
                 .into(itemView.findViewById(R.id.image))
         }

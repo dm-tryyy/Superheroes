@@ -1,6 +1,7 @@
 package ua.com.dkazhika.superheroes.core
 
 import android.app.Application
+import io.realm.Realm
 import retrofit2.Retrofit
 import ua.com.dkazhika.superheroes.data.HeroesRepository
 import ua.com.dkazhika.superheroes.data.cache.HeroCacheMapper
@@ -18,7 +19,7 @@ import ua.com.dkazhika.superheroes.presentation.ResourceProvider
 class SuperheroesApp : Application() {
 
     private companion object {
-        const val BASE_URL = "https://gateway.marvel.com/v1/public/"
+        const val BASE_URL = "http://gateway.marvel.com/v1/public/"
     }
 
 
@@ -27,6 +28,7 @@ class SuperheroesApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        Realm.init(this)
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             //todo log http calls
@@ -46,9 +48,11 @@ class SuperheroesApp : Application() {
         )
         val heroesInteractor = HeroesInteractor.Base(heroesRepository, BaseHeroesDataToDomainMapper())
 
+        val communication = HeroesCommunication.Base()
         mainViewModel = MainViewModel(
             heroesInteractor,
-            BaseHeroesDomainToUiMapper(HeroesCommunication.Base(), ResourceProvider.Base(this))
+            BaseHeroesDomainToUiMapper(communication, ResourceProvider.Base(this)),
+            communication
         )
     }
 }

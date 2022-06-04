@@ -1,12 +1,16 @@
 package ua.com.dkazhika.superheroes.data.net
 
-import ua.com.dkazhika.superheroes.data.net.servermodels.CharactersDataContainer
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import ua.com.dkazhika.superheroes.data.net.servermodels.CharacterDataWrapper
 
 interface HeroesCloudDataSource {
 
-    suspend fun fetchHeroes() : CharactersDataContainer
+    suspend fun fetchHeroes(): CharacterDataWrapper
 
     class Base(private val service: HeroesService) : HeroesCloudDataSource {
-        override suspend fun fetchHeroes(): CharactersDataContainer = service.fetchCharacters()
+        private val gson = Gson()
+        private val type = object : TypeToken<CharacterDataWrapper>() {}.type
+        override suspend fun fetchHeroes(): CharacterDataWrapper = gson.fromJson(service.fetchCharacters().string(), type)
     }
 }

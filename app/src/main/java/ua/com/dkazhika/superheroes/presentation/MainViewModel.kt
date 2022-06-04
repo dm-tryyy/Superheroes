@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ua.com.dkazhika.superheroes.core.Abstract
 import ua.com.dkazhika.superheroes.core.Hero
 import ua.com.dkazhika.superheroes.domain.HeroesDomainToUiMapper
@@ -19,7 +20,7 @@ class MainViewModel(
 
     fun fetchHeroes() = viewModelScope.launch(Dispatchers.IO) {
         val result = interactor.fetchHeroes().map(mapper)
-        with(Dispatchers.Main){
+        withContext(Dispatchers.Main){
             result.map(Abstract.Mapper.Empty())
         }
     }

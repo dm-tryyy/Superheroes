@@ -7,6 +7,6 @@ interface ThumbnailMapper : Abstract.Mapper {
     fun map(path: String, extension: String): String
 
     class Base() : ThumbnailMapper {
-        override fun map(path: String, extension: String) = "$path$extension"
+        override fun map(path: String, extension: String) = "$path.$extension"
     }
 }

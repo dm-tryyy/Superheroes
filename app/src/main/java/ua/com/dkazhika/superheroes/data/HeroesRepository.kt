@@ -19,7 +19,7 @@ interface HeroesRepository {
         override suspend fun fetchHeroes() = try {
             val heroesCacheList = cacheDataSource.fetchHeroes()
             if (heroesCacheList.isEmpty()) {
-                val charactersContainer = cloudDataSource.fetchHeroes()
+                val charactersContainer = cloudDataSource.fetchHeroes().data
                 val heroes = charactersContainer.map(heroesCloudMapper)
                 cacheDataSource.saveHeroes(heroes)
                 HeroesData.Success(heroes)
