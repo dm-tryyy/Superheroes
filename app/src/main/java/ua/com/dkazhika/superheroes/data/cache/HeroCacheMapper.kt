@@ -7,7 +7,7 @@ interface HeroCacheMapper : Abstract.Mapper {
 
     fun map(id: Int, name: String, description: String, imageUrl: String): Hero
 
-    class Base() : HeroCacheMapper {
+    class Base : HeroCacheMapper {
         override fun map(id: Int, name: String, description: String, imageUrl: String): Hero {
             return Hero(id, name, description, imageUrl)
         }

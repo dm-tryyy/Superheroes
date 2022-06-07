@@ -8,14 +8,6 @@ import ua.com.dkazhika.superheroes.data.net.HeroesCloudMapper
 
 @Keep
 data class CharactersDataContainer(
-    @SerializedName("offset")
-    private val offset: Int,
-    @SerializedName("limit")
-    private val limit: Int,
-    @SerializedName("total")
-    private val total: Int,
-    @SerializedName("count")
-    private val count: Int,
     @SerializedName("results")
     private val results: List<CharacterCloud>
 ) : Abstract.Object<List<Hero>, HeroesCloudMapper>() {

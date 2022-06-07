@@ -5,10 +5,10 @@ import ua.com.dkazhika.superheroes.core.Hero
 import ua.com.dkazhika.superheroes.domain.HeroDomain
 
 sealed class HeroesData : Abstract.Object<HeroDomain, HeroesDataToDomainMapper>() {
-    class Success(private val heroes: List<Hero>) : HeroesData() {
+    data class Success(private val heroes: List<Hero>) : HeroesData() {
         override fun map(mapper: HeroesDataToDomainMapper) = mapper.map(heroes)
     }
-    class Fail(private val e: Exception) : HeroesData() {
+    data class Fail(private val e: Exception) : HeroesData() {
         override fun map(mapper: HeroesDataToDomainMapper) = mapper.map(e)
     }
 }
