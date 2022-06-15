@@ -1,14 +1,15 @@
 package ua.com.dkazhika.superheroes.data.cache
 
-import ua.com.dkazhika.superheroes.core.Hero
+import ua.com.dkazhika.superheroes.data.HeroData
+import ua.com.dkazhika.superheroes.data.HeroDataToDbMapper
 
 interface HeroesCacheDataSource {
 
     fun fetchHeroes(): List<HeroDb>
 
-    fun saveHeroes(heroes: List<Hero>)
+    fun saveHeroes(heroes: List<HeroData>)
 
-    class Base(private val realmProvider: RealmProvider) : HeroesCacheDataSource {
+    class Base(private val realmProvider: RealmProvider, private val mapper: HeroDataToDbMapper) : HeroesCacheDataSource {
 
         override fun fetchHeroes(): List<HeroDb> {
             realmProvider.provide().use { realm ->
@@ -17,15 +18,11 @@ interface HeroesCacheDataSource {
             }
         }
 
-        override fun saveHeroes(heroes: List<Hero>) {
+        override fun saveHeroes(heroes: List<HeroData>) {
             realmProvider.provide().use { realm ->
                 realm.executeTransaction {
                     heroes.forEach { hero ->
-                        it.createObject(HeroDb::class.java, hero.id).apply {
-                            name = hero.name
-                            description = hero.description
-                            imageUrl = hero.imageUrl
-                        }
+                        hero.mapTo(mapper, it)
                     }
                 }
             }

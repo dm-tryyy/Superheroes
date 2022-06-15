@@ -1,13 +1,16 @@
 package ua.com.dkazhika.superheroes.presentation
 
-import ua.com.dkazhika.superheroes.core.Hero
-import ua.com.dkazhika.superheroes.domain.ErrorType
-import ua.com.dkazhika.superheroes.domain.HeroesDomainToUiMapper
+import ua.com.dkazhika.superheroes.domain.*
 
 class BaseHeroesDomainToUiMapper(
-    private val communication: HeroesCommunication,
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val mapper: HeroDomainToHeroUiMapper
 ) : HeroesDomainToUiMapper {
-    override fun map(heroes: List<Hero>) = HeroesUi.Success(heroes, communication)
-    override fun map(errorType: ErrorType) = HeroesUi.Fail(errorType, communication, resourceProvider)
+    override fun map(heroes: List<HeroDomain>) : HeroesUi.Success {
+        val heroesUi = heroes.map {
+            it.map(mapper)
+        }
+        return HeroesUi.Success(heroesUi)
+    }
+    override fun map(errorType: ErrorType) = HeroesUi.Fail(errorType, resourceProvider)
 }

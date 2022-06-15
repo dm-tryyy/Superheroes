@@ -1,10 +1,12 @@
 package ua.com.dkazhika.superheroes.data
 
+import kotlinx.coroutines.delay
 import ua.com.dkazhika.superheroes.data.cache.HeroesCacheDataSource
 import ua.com.dkazhika.superheroes.data.cache.HeroesCacheMapper
 import ua.com.dkazhika.superheroes.data.net.HeroesCloudDataSource
 import ua.com.dkazhika.superheroes.data.net.HeroesCloudMapper
 import java.lang.Exception
+import java.net.UnknownHostException
 
 interface HeroesRepository {
 
@@ -19,6 +21,7 @@ interface HeroesRepository {
         override suspend fun fetchHeroes() = try {
             val heroesCacheList = cacheDataSource.fetchHeroes()
             if (heroesCacheList.isEmpty()) {
+                delay(3000)
                 val charactersContainer = cloudDataSource.fetchHeroes().data
                 val heroes = charactersContainer.map(heroesCloudMapper)
                 cacheDataSource.saveHeroes(heroes)

@@ -8,8 +8,10 @@ interface HeroesCloudDataSource {
 
     suspend fun fetchHeroes(): CharacterDataWrapper
 
-    class Base(private val service: HeroesService) : HeroesCloudDataSource {
-        private val gson = Gson()
+    class Base(
+        private val service: HeroesService,
+        private val gson: Gson
+    ) : HeroesCloudDataSource {
         private val type = object : TypeToken<CharacterDataWrapper>() {}.type
         override suspend fun fetchHeroes(): CharacterDataWrapper = gson.fromJson(service.fetchCharacters().string(), type)
     }

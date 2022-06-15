@@ -3,33 +3,23 @@ package ua.com.dkazhika.superheroes.presentation
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import ua.com.dkazhika.superheroes.core.Abstract
 import ua.com.dkazhika.superheroes.core.Hero
 
-interface HeroesCommunication {
-    fun show(list: List<Hero>)
-    fun show(errorMessage: String)
+interface HeroesCommunication : Abstract.Mapper{
+    fun map(list: List<HeroUi>)
 
-    fun observeSuccess(owner: LifecycleOwner, observer: Observer<List<Hero>>)
-    fun observeFail(owner: LifecycleOwner, observer: Observer<String>)
+    fun observe(owner: LifecycleOwner, observer: Observer<List<HeroUi>>)
 
     class Base : HeroesCommunication {
-        private val successLiveData = MutableLiveData<List<Hero>>()
-        private val failLiveData = MutableLiveData<String>()
+        private val listLiveData = MutableLiveData<List<HeroUi>>()
 
-        override fun show(list: List<Hero>) {
-            successLiveData.value = list
+        override fun map(list: List<HeroUi>) {
+            listLiveData.value = list
         }
 
-        override fun show(errorMessage: String) {
-            failLiveData.value = errorMessage
-        }
-
-        override fun observeSuccess(owner: LifecycleOwner, observer: Observer<List<Hero>>) {
-            successLiveData.observe(owner, observer)
-        }
-
-        override fun observeFail(owner: LifecycleOwner, observer: Observer<String>) {
-            failLiveData.observe(owner, observer)
+        override fun observe(owner: LifecycleOwner, observer: Observer<List<HeroUi>>) {
+            listLiveData.observe(owner, observer)
         }
 
     }

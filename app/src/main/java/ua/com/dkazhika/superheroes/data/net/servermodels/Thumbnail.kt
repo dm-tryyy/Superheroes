@@ -11,7 +11,7 @@ data class Thumbnail(
     private val path: String,
     @SerializedName("extension")
     private val extension: String
-) : Abstract.Object<String, ThumbnailMapper>() {
+) : Abstract.Object<String, ThumbnailMapper> {
     override fun map(mapper: ThumbnailMapper): String {
         return mapper.map(path, extension)
     }

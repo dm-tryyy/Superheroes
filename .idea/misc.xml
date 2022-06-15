@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/fail_fullscreen.xml" value="0.24947916666666667" />
         <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/hero_layout.xml" value="0.12595419847328243" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/progress_fullscreen.xml" value="0.24947916666666667" />
       </map>
     </option>
   </component>

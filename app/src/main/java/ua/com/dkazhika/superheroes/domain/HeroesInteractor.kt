@@ -5,7 +5,7 @@ import ua.com.dkazhika.superheroes.data.HeroesRepository
 
 interface HeroesInteractor {
 
-    suspend fun fetchHeroes(): HeroDomain
+    suspend fun fetchHeroes(): HeroesDomain
 
     class Base(
         private val heroesRepository: HeroesRepository,

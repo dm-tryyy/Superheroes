@@ -14,13 +14,12 @@ class MainActivity : AppCompatActivity() {
         val viewModel = (application as SuperheroesApp).mainViewModel
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        val adapter = SuperheroesAdapter()
+        val adapter = SuperheroesAdapter { viewModel.fetchHeroes() }
         recyclerView.adapter = adapter
 
         viewModel.observe(this) {
             adapter.update(it)
         }
         viewModel.fetchHeroes()
-        //todo observe fail
     }
 }
