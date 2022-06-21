@@ -5,7 +5,7 @@ import ua.com.dkazhika.superheroes.data.HeroDataToDomainMapper
 import ua.com.dkazhika.superheroes.data.HeroesDataToDomainMapper
 
 class BaseHeroesDataToDomainMapper(private val mapper: HeroDataToDomainMapper) : HeroesDataToDomainMapper {
-    override fun map(heroes: List<HeroData>): HeroesDomain.Success {
+    override fun map(heroes: List<HeroData>): HeroesDomain {
         val heroesDomain = heroes.map {
             it.map(mapper)
         }

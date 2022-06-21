@@ -9,7 +9,8 @@ interface HeroesCacheDataSource {
 
     fun saveHeroes(heroes: List<HeroData>)
 
-    class Base(private val realmProvider: RealmProvider, private val mapper: HeroDataToDbMapper) : HeroesCacheDataSource {
+    class Base(private val realmProvider: RealmProvider, private val mapper: HeroDataToDbMapper) :
+        HeroesCacheDataSource {
 
         override fun fetchHeroes(): List<HeroDb> {
             realmProvider.provide().use { realm ->
@@ -18,12 +19,10 @@ interface HeroesCacheDataSource {
             }
         }
 
-        override fun saveHeroes(heroes: List<HeroData>) {
-            realmProvider.provide().use { realm ->
-                realm.executeTransaction {
-                    heroes.forEach { hero ->
-                        hero.mapTo(mapper, it)
-                    }
+        override fun saveHeroes(heroes: List<HeroData>) = realmProvider.provide().use { realm ->
+            realm.executeTransaction {
+                heroes.forEach { hero ->
+                    hero.mapTo(mapper, DbWrapper.Base(it))
                 }
             }
         }

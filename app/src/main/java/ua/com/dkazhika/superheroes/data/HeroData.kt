@@ -1,7 +1,7 @@
 package ua.com.dkazhika.superheroes.data
 
-import io.realm.Realm
 import ua.com.dkazhika.superheroes.core.Abstract
+import ua.com.dkazhika.superheroes.data.cache.DbWrapper
 import ua.com.dkazhika.superheroes.data.cache.HeroDb
 import ua.com.dkazhika.superheroes.domain.HeroDomain
 
@@ -15,12 +15,12 @@ data class HeroData(
         return mapper.map(id, name, description, imageUrl)
     }
 
-    override fun mapTo(mapper: HeroDataToDbMapper, realm: Realm): HeroDb {
-        return mapper.mapToDb(id, name, description, imageUrl, realm)
+    override fun mapTo(mapper: HeroDataToDbMapper, db: DbWrapper): HeroDb {
+        return mapper.mapToDb(id, name, description, imageUrl, db)
     }
 }
 
 //todo make better later
 interface ToHeroDb<T, M : Abstract.Mapper> {
-    fun mapTo(mapper: HeroDataToDbMapper, realm: Realm): T
+    fun mapTo(mapper: HeroDataToDbMapper, db: DbWrapper): T
 }

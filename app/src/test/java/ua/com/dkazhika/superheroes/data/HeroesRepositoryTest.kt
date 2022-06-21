@@ -11,7 +11,7 @@ import ua.com.dkazhika.superheroes.data.net.HeroesCloudDataSource
 import ua.com.dkazhika.superheroes.data.net.HeroesCloudMapper
 import ua.com.dkazhika.superheroes.data.net.servermodels.*
 import java.net.UnknownHostException
-/*
+
 class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
 
     private val results = listOf(
@@ -30,7 +30,7 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
         val repository = HeroesRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            HeroesCloudMapper.Base(TestHeroDataToDomainMapper(TestThumbnailMapper())),
+            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestThumbnailMapper())),
             HeroesCacheMapper.Base(TestHeroCacheMapper())
         )
 
@@ -47,16 +47,16 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
         val repository = HeroesRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            HeroesCloudMapper.Base(TestHeroDataToDomainMapper(TestThumbnailMapper())),
+            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestThumbnailMapper())),
             HeroesCacheMapper.Base(TestHeroCacheMapper())
         )
 
         val actual = repository.fetchHeroes()
         val expected = HeroesData.Success(
             listOf(
-                Hero(1, "name1", "description1", "path1.jpg"),
-                Hero(2, "name2", "description2", "path2.jpg"),
-                Hero(3, "name3", "description3", "path3.jpg")
+                HeroData(1, "name1", "description1", "path1.jpg"),
+                HeroData(2, "name2", "description2", "path2.jpg"),
+                HeroData(3, "name3", "description3", "path3.jpg")
             )
         )
 
@@ -70,16 +70,16 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
         val repository = HeroesRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            HeroesCloudMapper.Base(TestHeroDataToDomainMapper(TestThumbnailMapper())),
+            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestThumbnailMapper())),
             HeroesCacheMapper.Base(TestHeroCacheMapper())
         )
 
         val actual = repository.fetchHeroes()
         val expected = HeroesData.Success(
             listOf(
-                Hero(10, "name10", "description10", "image10"),
-                Hero(11, "name20", "description20", "image20"),
-                Hero(12, "name30", "description30", "image30")
+                HeroData(10, "name10", "description10", "image10"),
+                HeroData(11, "name20", "description20", "image20"),
+                HeroData(12, "name30", "description30", "image30")
             )
         )
 
@@ -93,16 +93,16 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
         val repository = HeroesRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            HeroesCloudMapper.Base(TestHeroDataToDomainMapper(TestThumbnailMapper())),
+            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestThumbnailMapper())),
             HeroesCacheMapper.Base(TestHeroCacheMapper())
         )
 
         val actual = repository.fetchHeroes()
         val expected = HeroesData.Success(
             listOf(
-                Hero(10, "name10", "description10", "image10"),
-                Hero(11, "name20", "description20", "image20"),
-                Hero(12, "name30", "description30", "image30")
+                HeroData(10, "name10", "description10", "image10"),
+                HeroData(11, "name20", "description20", "image20"),
+                HeroData(12, "name30", "description30", "image30")
             )
         )
 
@@ -153,9 +153,9 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
             }
         }
 
-        override fun saveHeroes(heroes: List<Hero>) {
+        override fun saveHeroes(heroes: List<HeroData>) {
             // not used here
         }
     }
 
-}*/
+}
