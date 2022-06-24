@@ -6,18 +6,30 @@ import io.realm.Realm
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import ua.com.dkazhika.superheroes.data.HeroDataToDbMapper
-import ua.com.dkazhika.superheroes.data.HeroesRepository
-import ua.com.dkazhika.superheroes.data.cache.HeroCacheMapper
-import ua.com.dkazhika.superheroes.data.cache.HeroesCacheDataSource
-import ua.com.dkazhika.superheroes.data.cache.HeroesCacheMapper
-import ua.com.dkazhika.superheroes.data.cache.RealmProvider
-import ua.com.dkazhika.superheroes.data.net.*
-import ua.com.dkazhika.superheroes.domain.BaseHeroDataToDomainMapper
-import ua.com.dkazhika.superheroes.domain.BaseHeroesDataToDomainMapper
-import ua.com.dkazhika.superheroes.domain.HeroDomainToHeroUiMapper
-import ua.com.dkazhika.superheroes.domain.HeroesInteractor
+import ua.com.dkazhika.superheroes.data.herodetails.HeroDetailsRepository
+import ua.com.dkazhika.superheroes.data.herodetails.cloud.*
+import ua.com.dkazhika.superheroes.data.heroeslist.HeroDataToDbMapper
+import ua.com.dkazhika.superheroes.data.heroeslist.HeroesRepository
+import ua.com.dkazhika.superheroes.data.heroeslist.cache.HeroCacheMapper
+import ua.com.dkazhika.superheroes.data.heroeslist.cache.HeroesCacheDataSource
+import ua.com.dkazhika.superheroes.data.heroeslist.cache.HeroesCacheMapper
+import ua.com.dkazhika.superheroes.data.heroeslist.cache.RealmProvider
+import ua.com.dkazhika.superheroes.data.heroeslist.cloud.*
+import ua.com.dkazhika.superheroes.domain.herodetails.BaseHeroDetailsDataContainerToDomainMapper
+import ua.com.dkazhika.superheroes.domain.herodetails.BaseHeroDetailsDataToDomainMapper
+import ua.com.dkazhika.superheroes.domain.herodetails.HeroDetailsInteractor
+import ua.com.dkazhika.superheroes.domain.heroeslist.BaseHeroDataToDomainMapper
+import ua.com.dkazhika.superheroes.domain.heroeslist.BaseHeroesDataToDomainMapper
+import ua.com.dkazhika.superheroes.domain.heroeslist.HeroesInteractor
 import ua.com.dkazhika.superheroes.presentation.*
+import ua.com.dkazhika.superheroes.presentation.herodetails.BaseHeroDetailsDomainContainerToUiMapper
+import ua.com.dkazhika.superheroes.presentation.herodetails.BaseHeroDetailsDomainToUiMapper
+import ua.com.dkazhika.superheroes.presentation.herodetails.HeroDetailsCommunication
+import ua.com.dkazhika.superheroes.presentation.herodetails.HeroDetailsViewModel
+import ua.com.dkazhika.superheroes.presentation.heroeslist.BaseHeroDomainToHeroUiMapper
+import ua.com.dkazhika.superheroes.presentation.heroeslist.BaseHeroesDomainToUiMapper
+import ua.com.dkazhika.superheroes.presentation.heroeslist.HeroesCommunication
+import ua.com.dkazhika.superheroes.presentation.heroeslist.HeroesListViewModel
 
 class SuperheroesApp : Application() {
 
@@ -26,7 +38,8 @@ class SuperheroesApp : Application() {
     }
 
 
-    lateinit var mainViewModel: MainViewModel
+    lateinit var heroesListViewModel: HeroesListViewModel
+    lateinit var heroDetailsViewModel: HeroDetailsViewModel
 
     override fun onCreate() {
         super.onCreate()
@@ -42,11 +55,20 @@ class SuperheroesApp : Application() {
             .client(client)
             .build()
         val service = retrofit.create(HeroesService::class.java)
+        val heroDetailsService = retrofit.create(HeroDetailsService::class.java)
         val gson = Gson()
         val cloudDataSource = HeroesCloudDataSource.Base(service, gson)
-        val cacheDataSource = HeroesCacheDataSource.Base(RealmProvider.Base(), HeroDataToDbMapper.Base())
+        val heroDetailsCloudDataSource = HeroDetailsCloudDataSource.Base(heroDetailsService, gson)
+        val cacheDataSource =
+            HeroesCacheDataSource.Base(RealmProvider.Base(), HeroDataToDbMapper.Base())
         val heroesCloudMapper =
-            HeroesCloudMapper.Base(HeroCloudToDataMapper.Base(ThumbnailMapper.Base()))
+            HeroesCloudMapper.Base(HeroCloudToDataMapper.Base(ImageMapper.Base()))
+        val heroDetailsCloudMapper = HeroDetailsCloudMapper.Base(
+            HeroCloudToHeroDetailsMapper.Base(
+                ImageMapper.Base(),
+                ComicsListMapper.Base(ComicSummaryMapper.Base())
+            )
+        )
         val heroesCacheMapper = HeroesCacheMapper.Base(HeroCacheMapper.Base())
 
         val heroesRepository = HeroesRepository.Base(
@@ -55,18 +77,33 @@ class SuperheroesApp : Application() {
             heroesCloudMapper,
             heroesCacheMapper
         )
+        val heroDetailsRepository = HeroDetailsRepository.Base(
+            heroDetailsCloudDataSource,
+            heroDetailsCloudMapper
+        )
         val heroesInteractor =
             HeroesInteractor.Base(
                 heroesRepository, BaseHeroesDataToDomainMapper(
                     BaseHeroDataToDomainMapper()
                 )
             )
+        val heroDetailsInteractor =
+            HeroDetailsInteractor.Base(
+                heroDetailsRepository,
+                BaseHeroDetailsDataContainerToDomainMapper(BaseHeroDetailsDataToDomainMapper())
+            )
 
-        val communication = HeroesCommunication.Base()
-        mainViewModel = MainViewModel(
+        val resourceProvider = ResourceProvider.Base(this)
+
+        heroesListViewModel = HeroesListViewModel(
             heroesInteractor,
-            BaseHeroesDomainToUiMapper(ResourceProvider.Base(this), BaseHeroDomainToHeroUiMapper()),
-            communication
+            BaseHeroesDomainToUiMapper(resourceProvider, BaseHeroDomainToHeroUiMapper()),
+            HeroesCommunication.Base()
+        )
+        heroDetailsViewModel = HeroDetailsViewModel(
+            heroDetailsInteractor,
+            HeroDetailsCommunication.Base(),
+            BaseHeroDetailsDomainContainerToUiMapper(BaseHeroDetailsDomainToUiMapper(), resourceProvider)
         )
     }
 }

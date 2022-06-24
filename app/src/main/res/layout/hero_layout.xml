@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/black"
@@ -9,19 +9,20 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding8"
+        android:layout_margin="@dimen/padding8"
         style="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/white"
         tools:text="Spider-Man"
-        android:gravity="center_horizontal"/>
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.7"/>
 
     <ImageView
         android:id="@+id/image"
         tools:src="@drawable/ic_launcher_background"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

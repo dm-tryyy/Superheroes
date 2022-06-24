@@ -3,25 +3,30 @@ package ua.com.dkazhika.superheroes.data
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import ua.com.dkazhika.superheroes.core.Hero
-import ua.com.dkazhika.superheroes.data.cache.HeroDb
-import ua.com.dkazhika.superheroes.data.cache.HeroesCacheDataSource
-import ua.com.dkazhika.superheroes.data.cache.HeroesCacheMapper
-import ua.com.dkazhika.superheroes.data.net.HeroesCloudDataSource
-import ua.com.dkazhika.superheroes.data.net.HeroesCloudMapper
-import ua.com.dkazhika.superheroes.data.net.servermodels.*
+import ua.com.dkazhika.superheroes.data.heroeslist.HeroData
+import ua.com.dkazhika.superheroes.data.heroeslist.HeroesDataContainer
+import ua.com.dkazhika.superheroes.data.heroeslist.HeroesRepository
+import ua.com.dkazhika.superheroes.data.heroeslist.cache.HeroDb
+import ua.com.dkazhika.superheroes.data.heroeslist.cache.HeroesCacheDataSource
+import ua.com.dkazhika.superheroes.data.heroeslist.cache.HeroesCacheMapper
+import ua.com.dkazhika.superheroes.data.heroeslist.cloud.HeroesCloudDataSource
+import ua.com.dkazhika.superheroes.data.heroeslist.cloud.HeroesCloudMapper
+import ua.com.dkazhika.superheroes.data.servermodels.*
 import java.net.UnknownHostException
 
 class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
 
+    private val comicsList = ComicList(listOf(ComicSummary("comic's name")), 1)
+    private val unknownHostException = UnknownHostException()
+
     private val results = listOf(
-        CharacterCloud(1, "name1", "description1", Thumbnail("path1", "jpg")),
-        CharacterCloud(2, "name2", "description2", Thumbnail("path2", "jpg")),
-        CharacterCloud(3, "name3", "description3", Thumbnail("path3", "jpg"))
+        CharacterCloud(1, "name1", "description1", Image("path1", "jpg"), comicsList),
+        CharacterCloud(2, "name2", "description2", Image("path2", "jpg"), comicsList),
+        CharacterCloud(3, "name3", "description3", Image("path3", "jpg"), comicsList)
     )
+
     private val charactersDataContainer = CharactersDataContainer(results)
     private val characterDataWrapper = CharacterDataWrapper(charactersDataContainer)
-    private val unknownHostException = UnknownHostException()
 
     @Test
     fun `getting list of heroes without internet and cache`() = runBlocking {
@@ -30,12 +35,12 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
         val repository = HeroesRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestThumbnailMapper())),
+            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestImageMapper())),
             HeroesCacheMapper.Base(TestHeroCacheMapper())
         )
 
         val actual = repository.fetchHeroes()
-        val expected = HeroesData.Fail(unknownHostException)
+        val expected = HeroesDataContainer.Fail(unknownHostException)
 
         assertEquals(expected, actual)
     }
@@ -47,16 +52,16 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
         val repository = HeroesRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestThumbnailMapper())),
+            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestImageMapper())),
             HeroesCacheMapper.Base(TestHeroCacheMapper())
         )
 
         val actual = repository.fetchHeroes()
-        val expected = HeroesData.Success(
+        val expected = HeroesDataContainer.Success(
             listOf(
-                HeroData(1, "name1", "description1", "path1.jpg"),
-                HeroData(2, "name2", "description2", "path2.jpg"),
-                HeroData(3, "name3", "description3", "path3.jpg")
+                HeroData(1, "name1", "path1.jpg"),
+                HeroData(2, "name2", "path2.jpg"),
+                HeroData(3, "name3", "path3.jpg")
             )
         )
 
@@ -70,16 +75,16 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
         val repository = HeroesRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestThumbnailMapper())),
+            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestImageMapper())),
             HeroesCacheMapper.Base(TestHeroCacheMapper())
         )
 
         val actual = repository.fetchHeroes()
-        val expected = HeroesData.Success(
+        val expected = HeroesDataContainer.Success(
             listOf(
-                HeroData(10, "name10", "description10", "image10"),
-                HeroData(11, "name20", "description20", "image20"),
-                HeroData(12, "name30", "description30", "image30")
+                HeroData(10, "name10", "image10"),
+                HeroData(11, "name20", "image20"),
+                HeroData(12, "name30", "image30")
             )
         )
 
@@ -93,16 +98,16 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
         val repository = HeroesRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestThumbnailMapper())),
+            HeroesCloudMapper.Base(TestHeroCloudToDataMapper(TestImageMapper())),
             HeroesCacheMapper.Base(TestHeroCacheMapper())
         )
 
         val actual = repository.fetchHeroes()
-        val expected = HeroesData.Success(
+        val expected = HeroesDataContainer.Success(
             listOf(
-                HeroData(10, "name10", "description10", "image10"),
-                HeroData(11, "name20", "description20", "image20"),
-                HeroData(12, "name30", "description30", "image30")
+                HeroData(10, "name10", "image10"),
+                HeroData(11, "name20", "image20"),
+                HeroData(12, "name30", "image30")
             )
         )
 
@@ -132,19 +137,16 @@ class HeroesRepositoryTest : BaseHeroesRepositoryTest() {
                     HeroDb().apply {
                         id = 10
                         name = "name10"
-                        description = "description10"
                         imageUrl = "image10"
                     },
                     HeroDb().apply {
                         id = 11
                         name = "name20"
-                        description = "description20"
                         imageUrl = "image20"
                     },
                     HeroDb().apply {
                         id = 12
                         name = "name30"
-                        description = "description30"
                         imageUrl = "image30"
                     }
                 )
