@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ua.com.dkazhika.superheroes.Navigator
@@ -18,21 +19,15 @@ import ua.com.dkazhika.superheroes.databinding.HeroesListFragmentBinding
 import ua.com.dkazhika.superheroes.domain.heroeslist.GetHeroesListUseCase
 import ua.com.dkazhika.superheroes.domain.heroeslist.HeroesRepository
 
+@AndroidEntryPoint
 class HeroesListFragment : Fragment() {
 
-    private lateinit var repository: HeroesRepository
-    private val viewModel: HeroesListViewModel by viewModels {
-        HeroesListViewModelFactory(
-            GetHeroesListUseCase.Base(repository),
-            HeroToHeroUiMapper.Base()
-        )
-    }
+    private val viewModel: HeroesListViewModel by viewModels()
     private lateinit var adapter: SuperheroesAdapter
     private lateinit var binding: HeroesListFragmentBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        repository = (context.applicationContext as SuperheroesApp).heroesRepository
         Log.d("ddd", "onAttach ${this.hashCode()}")
     }
 

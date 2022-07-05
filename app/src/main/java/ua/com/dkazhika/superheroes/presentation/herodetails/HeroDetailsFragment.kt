@@ -12,31 +12,32 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import dagger.hilt.android.AndroidEntryPoint
 import ua.com.dkazhika.superheroes.R
 import ua.com.dkazhika.superheroes.SuperheroesApp
 import ua.com.dkazhika.superheroes.databinding.FragmentHeroDetailsBinding
 import ua.com.dkazhika.superheroes.domain.herodetails.GetHeroDetailsUseCase
 import ua.com.dkazhika.superheroes.domain.herodetails.HeroDetailsRepository
+import ua.com.dkazhika.superheroes.presentation.viewModelCreator
+import javax.inject.Inject
 import kotlin.properties.Delegates.notNull
 
 private const val HERO_ID = "heroId"
 
+@AndroidEntryPoint
 class HeroDetailsFragment : Fragment() {
 
+    @Inject
+    lateinit var factory: HeroDetailsViewModel.Factory
     private var heroId by notNull<Int>()
-    private lateinit var repository: HeroDetailsRepository
-    private val viewModel: HeroDetailsViewModel by viewModels {
-        HeroDetailsViewModelFactory(
-            GetHeroDetailsUseCase.Base(repository),
-            HeroDetailsToHeroUiMapper.Base(),
-            heroId
-        )
+    private val viewModel: HeroDetailsViewModel by viewModelCreator {
+        factory.create(heroId)
     }
+
     private lateinit var binding: FragmentHeroDetailsBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        repository = (context.applicationContext as SuperheroesApp).heroDetailsRepository
         Log.d("ddd", "onAttach ${this.hashCode()}")
 
     }

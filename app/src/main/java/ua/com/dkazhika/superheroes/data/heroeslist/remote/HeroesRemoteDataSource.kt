@@ -7,12 +7,13 @@ import ua.com.dkazhika.superheroes.data.heroeslist.local.HeroesDb
 import ua.com.dkazhika.superheroes.data.heroeslist.paging.HeroesRemoteMediator
 import ua.com.dkazhika.superheroes.data.HeroesApi
 import ua.com.dkazhika.superheroes.domain.heroeslist.Hero
+import javax.inject.Inject
 
 interface HeroesRemoteDataSource {
 
     fun getHeroes(): Flow<PagingData<Hero>>
 
-    class Base(
+    class Base @Inject constructor(
         private val api: HeroesApi,
         private val database: HeroesDb,
     ) : HeroesRemoteDataSource {

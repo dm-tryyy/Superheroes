@@ -27,7 +27,7 @@ class HeroesRemoteMediator(
             val currentPage = when (loadType) {
                 LoadType.REFRESH -> {
                     val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                    remoteKeys?.nextPage?.minus(1) ?: 0
+                    remoteKeys?.nextPage?.minus(1) ?: 1
                 }
                 LoadType.PREPEND -> {
                     val remoteKeys = getRemoteKeyForFirstItem(state)
@@ -61,7 +61,7 @@ class HeroesRemoteMediator(
                     heroesRemoteKeys.deleteAllRemoteKeys()
                 }
 
-                val prevPage = if (currentPage == 0) null else currentPage - 1
+                val prevPage = if (currentPage == 1) null else currentPage - 1
                 val nextPage = if (endOfPaginationReached) null else currentPage + 1
 
                 val keys = heroes.map { hero ->
@@ -108,6 +108,6 @@ class HeroesRemoteMediator(
             }
     }
     companion object {
-        const val LOAD_LIMIT = 3
+        const val LOAD_LIMIT = 10
     }
 }
