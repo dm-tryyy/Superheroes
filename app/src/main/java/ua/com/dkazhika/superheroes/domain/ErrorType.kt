@@ -1,7 +1,11 @@
 package ua.com.dkazhika.superheroes.domain
 
-enum class ErrorType {
-    NO_CONNECTION,
-    SERVICE_UNAVAILABLE,
-    GENERIC_ERROR
+sealed class ErrorType {
+
+    object NoConnection : ErrorType()
+
+    object ServiceUnavailable : ErrorType()
+
+    object Unknown : ErrorType()
+
 }

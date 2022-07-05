@@ -1,6 +1,6 @@
-package ua.com.dkazhika.superheroes.presentation.herodetails
+package ua.com.dkazhika.superheroes.domain.herodetails
 
-data class HeroDetailsUi(
+data class HeroDetails(
     val id: Int,
     val name: String,
     val description: String,

@@ -1,12 +1,9 @@
 package ua.com.dkazhika.superheroes
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
-import ua.com.dkazhika.superheroes.core.SuperheroesApp
+import androidx.appcompat.app.AppCompatActivity
 import ua.com.dkazhika.superheroes.presentation.herodetails.HeroDetailsFragment
 import ua.com.dkazhika.superheroes.presentation.heroeslist.HeroesListFragment
-import ua.com.dkazhika.superheroes.presentation.heroeslist.SuperheroesAdapter
 
 class MainActivity : AppCompatActivity(), Navigator {
     override fun onCreate(savedInstanceState: Bundle?) {
