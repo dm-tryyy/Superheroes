@@ -1,11 +1,12 @@
 package ua.com.dkazhika.superheroes.data.heroeslist.local
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import ua.com.dkazhika.superheroes.domain.heroeslist.Hero
 
 
-@Entity(tableName = "heroes")
+@Entity(tableName = "heroes", indices = [Index("id", unique = true)])
 data class HeroDb(
     @PrimaryKey(autoGenerate = true)
     val databaseId: Int = 0,
@@ -13,5 +14,5 @@ data class HeroDb(
     val name: String,
     var imageUrl: String
 ) {
-    fun toHero() : Hero = Hero(id = id, name = name, imageUrl = imageUrl)
+    fun toHero(): Hero = Hero(id = id, name = name, imageUrl = imageUrl)
 }
