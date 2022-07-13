@@ -1,17 +1,22 @@
 package ua.com.dkazhika.superheroes.presentation.herodetails
 
 import androidx.lifecycle.*
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ua.com.dkazhika.superheroes.domain.ErrorType
 import ua.com.dkazhika.superheroes.domain.herodetails.GetHeroDetailsUseCase
 import ua.com.dkazhika.superheroes.domain.herodetails.Result
+import javax.inject.Inject
 
-class HeroDetailsViewModel(
+class HeroDetailsViewModel @AssistedInject constructor(
     private val getHeroDetailsUseCase: GetHeroDetailsUseCase,
     private val mapper: HeroDetailsToHeroUiMapper,
-    heroId: Int
+    @Assisted heroId: Int
 ) : ViewModel() {
 
     private val _state: MutableLiveData<HeroDetailsUiState> = MutableLiveData()
@@ -43,6 +48,11 @@ class HeroDetailsViewModel(
                 }
             }
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(heroId: Int) : HeroDetailsViewModel
     }
 }
 

@@ -4,12 +4,13 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ua.com.dkazhika.superheroes.data.HeroesApi
 import ua.com.dkazhika.superheroes.data.servermodels.CharacterDataWrapper
+import javax.inject.Inject
 
 interface HeroDetailsRemoteDataSource {
 
     suspend fun getHeroDetails(id: Int): CharacterDataWrapper
 
-    class Base(
+    class Base @Inject constructor(
         private val api: HeroesApi
     ) : HeroDetailsRemoteDataSource {
         private val type = object : TypeToken<CharacterDataWrapper>() {}.type

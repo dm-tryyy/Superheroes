@@ -5,8 +5,9 @@ import kotlinx.coroutines.flow.Flow
 import ua.com.dkazhika.superheroes.data.heroeslist.remote.HeroesRemoteDataSource
 import ua.com.dkazhika.superheroes.domain.heroeslist.Hero
 import ua.com.dkazhika.superheroes.domain.heroeslist.HeroesRepository
+import javax.inject.Inject
 
-class HeroesRepositoryImpl(
+class HeroesRepositoryImpl @Inject constructor(
     private val remoteDataSource: HeroesRemoteDataSource
 ) : HeroesRepository {
 

@@ -2,9 +2,11 @@ package ua.com.dkazhika.superheroes
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import ua.com.dkazhika.superheroes.presentation.herodetails.HeroDetailsFragment
 import ua.com.dkazhika.superheroes.presentation.heroeslist.HeroesListFragment
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), Navigator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

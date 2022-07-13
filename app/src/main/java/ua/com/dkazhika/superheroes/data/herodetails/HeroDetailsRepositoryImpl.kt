@@ -5,8 +5,9 @@ import ua.com.dkazhika.superheroes.data.herodetails.remote.HeroDetailsRemoteData
 import ua.com.dkazhika.superheroes.domain.herodetails.HeroDetailsRepository
 import ua.com.dkazhika.superheroes.domain.herodetails.Result
 import ua.com.dkazhika.superheroes.domain.ErrorHandler
+import javax.inject.Inject
 
-class HeroDetailsRepositoryImpl(
+class HeroDetailsRepositoryImpl @Inject constructor(
     private val remoteDataSource: HeroDetailsRemoteDataSource,
     private val errorHandler: ErrorHandler
 ) : HeroDetailsRepository {

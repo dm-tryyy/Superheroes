@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface HeroesDao {
 
-    @Query("SELECT * FROM heroes")
+    @Query("SELECT * FROM heroes ORDER BY databaseId ASC")
     fun getHeroes(): PagingSource<Int, HeroDb>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

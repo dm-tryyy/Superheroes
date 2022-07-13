@@ -22,5 +22,5 @@ data class CharacterApi(
 
     fun toHeroDetails() = HeroDetails(id, name, description, image.toImageUrl(), comics.toComicsList())
 
-    fun toHeroDb() = HeroDb(id, name, image.toImageUrl())
+    fun toHeroDb() = HeroDb(id = id, name = name, imageUrl = image.toImageUrl())
 }
