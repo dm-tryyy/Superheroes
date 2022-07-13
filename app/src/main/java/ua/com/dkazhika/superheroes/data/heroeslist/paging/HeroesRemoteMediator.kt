@@ -47,11 +47,11 @@ class HeroesRemoteMediator(
                 }
             }
 
-            val offset = currentPage * LOAD_LIMIT
+            val offset = (currentPage - 1) * LOAD_LIMIT
 
             val type = object : TypeToken<CharacterDataWrapper>() {}.type
             val response = service.getHeroes(offset = offset)
-            val dataWrapper : CharacterDataWrapper = Gson().fromJson(response.string(), type)
+            val dataWrapper: CharacterDataWrapper = Gson().fromJson(response.string(), type)
             val heroes = dataWrapper.data.results.map { it.toHeroDb() }
             val endOfPaginationReached = heroes.isEmpty()
 
@@ -107,6 +107,7 @@ class HeroesRemoteMediator(
                 heroesRemoteKeys.getRemoteKeys(id = hero.id)
             }
     }
+
     companion object {
         const val LOAD_LIMIT = 10
     }

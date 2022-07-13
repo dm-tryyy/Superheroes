@@ -3,14 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/drawable/heroes_tab_icon.xml" value="0.115" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/drawable/ic_heroes.xml" value="0.115" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/drawable/ic_heroes_selected.xml" value="0.115" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/drawable/ic_profile.xml" value="0.115" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/drawable/ic_profile_selected.xml" value="0.115" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/drawable/profile_tab_icon.xml" value="0.115" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/comics_name.xml" value="0.24947916666666667" />
         <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/fail_fullscreen.xml" value="0.24947916666666667" />
         <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/fragment_hero_details.xml" value="0.20833333333333334" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/fragment_heroes_list.xml" value="0.17037037037037037" />
         <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/hero_layout.xml" value="0.1" />
         <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/heroes_list_fragment.xml" value="0.1" />
         <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/part_default_load_state.xml" value="0.25052083333333336" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/profile_fragment.xml" value="0.253125" />
         <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/layout/progress_fullscreen.xml" value="0.24947916666666667" />
+        <entry key="..\:/android/AndroidStudioProjects/Superheroes/app/src/main/res/menu/tabs_menu.xml" value="0.253125" />
       </map>
     </option>
   </component>

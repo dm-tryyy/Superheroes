@@ -22,8 +22,6 @@ import ua.com.dkazhika.superheroes.presentation.viewModelCreator
 import javax.inject.Inject
 import kotlin.properties.Delegates.notNull
 
-private const val HERO_ID = "heroId"
-
 @AndroidEntryPoint
 class HeroDetailsFragment : Fragment() {
 
@@ -46,9 +44,6 @@ class HeroDetailsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         Log.d("ddd", "onCreate ${this.hashCode()}")
 
-        arguments?.let {
-            heroId = it.getInt(HERO_ID)
-        }
     }
 
     override fun onCreateView(
@@ -63,6 +58,8 @@ class HeroDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("ddd", "onViewCreated ${this.hashCode()}")
+
+        heroId = arguments?.getInt(HERO_ID) ?: -1
 
         viewModel.state.observe(viewLifecycleOwner) {
             with(binding) {
@@ -146,13 +143,7 @@ class HeroDetailsFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(id: Int) =
-            HeroDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(HERO_ID, id)
-                }
-            }
+        const val HERO_ID = "heroId"
     }
 }
 

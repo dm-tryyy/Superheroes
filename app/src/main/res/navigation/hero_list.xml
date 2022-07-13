@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hero_list"
+    app:startDestination="@id/heroesListFragment">
+
+    <fragment
+        android:id="@+id/heroesListFragment"
+        android:name="ua.com.dkazhika.superheroes.presentation.heroeslist.HeroesListFragment"
+        android:label="@string/all_marvel_heroes"
+        tools:layout="@layout/fragment_heroes_list">
+        <action
+            android:id="@+id/action_heroesListFragment_to_heroDetailsFragment"
+            app:destination="@id/heroDetailsFragment" />
+        <argument
+            android:name="heroId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/heroDetailsFragment"
+        android:name="ua.com.dkazhika.superheroes.presentation.herodetails.HeroDetailsFragment"
+        android:label="Hero Details"
+        tools:layout="@layout/fragment_hero_details" />
+</navigation>

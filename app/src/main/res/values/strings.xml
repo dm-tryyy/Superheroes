@@ -3,7 +3,18 @@
     <string name="service_unavailable_message">Service unavailable</string>
     <string name="no_connection_message">No connection</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="all_marvel_heroes">All Marvel Heroes</string>
+    <string name="hero_details">Hero Details</string>
     <string name="try_again">Try Again</string>
+    <string name="profile">Profile</string>
     <string name="SpiderMan">SpiderMan</string>
     <string name="load_error">something went wrong</string>
+    <string name="heroes">Heroes</string>
+    <string name="profile_title_hint">User\'s profile screen</string>
+    <string name="field_email">E-mail</string>
+    <string name="field_username">Username</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_edit_profile">Edit profile</string>
+    <string name="test_email">test@test.test</string>
+    <string name="test_username">admin</string>
 </resources>

@@ -14,17 +14,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ua.com.dkazhika.superheroes.Navigator
-import ua.com.dkazhika.superheroes.SuperheroesApp
-import ua.com.dkazhika.superheroes.databinding.HeroesListFragmentBinding
-import ua.com.dkazhika.superheroes.domain.heroeslist.GetHeroesListUseCase
-import ua.com.dkazhika.superheroes.domain.heroeslist.HeroesRepository
+import ua.com.dkazhika.superheroes.databinding.FragmentHeroesListBinding
 
 @AndroidEntryPoint
 class HeroesListFragment : Fragment() {
 
     private val viewModel: HeroesListViewModel by viewModels()
     private lateinit var adapter: SuperheroesAdapter
-    private lateinit var binding: HeroesListFragmentBinding
+    private lateinit var binding: FragmentHeroesListBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,7 +41,7 @@ class HeroesListFragment : Fragment() {
     ): View {
         Log.d("ddd", "onCreateView ${this.hashCode()}")
 
-        binding = HeroesListFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentHeroesListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
