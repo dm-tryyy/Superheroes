@@ -25,6 +25,7 @@ android {
         buildConfigField "String", "API_KEY", apikeyProperties['API_KEY']
         buildConfigField "String", "HASH", apikeyProperties['HASH']
         buildConfigField "String", "TIMESTAMP", apikeyProperties['TIMESTAMP']
+        buildConfigField "String", "BASE_URL", apikeyProperties['BASE_URL']
     }
 
     buildTypes {

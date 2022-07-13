@@ -22,6 +22,6 @@ interface HeroesApi {
         const val TIMESTAMP = BuildConfig.TIMESTAMP
         const val API_KEY = BuildConfig.API_KEY
         const val HASH = BuildConfig.HASH
-        const val BASE_URL = "https://gateway.marvel.com/v1/public/"
+        const val BASE_URL = BuildConfig.BASE_URL
     }
 }
